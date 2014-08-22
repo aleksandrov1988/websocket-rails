@@ -164,7 +164,7 @@ module WebsocketRails
     def find_user(identifier)
       Fiber.new do
         raw_user = redis.hget('websocket_rails.users', identifier)
-        raw_user ? JSON.parse(raw_user) : nil
+        raw_user.is_a?(String) && raw_user ? JSON.parse(raw_user) : nil
       end.resume
     end
 
